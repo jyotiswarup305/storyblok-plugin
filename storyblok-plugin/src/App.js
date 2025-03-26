@@ -1,5 +1,6 @@
 import React from 'react';
 import StoryblokPlugin from './StoryblokPlugin';
+import StoryblokPluginUpdate from './StoryblokPluginUpdate';
  
 const App = () => {
   const storyId = '22795071'; // Replace with your actual story ID
@@ -7,7 +8,7 @@ const App = () => {
  
   return (
     <div className="App">
-      <StoryblokPlugin storyId={storyId} spaceId={spaceId} />
+      <StoryblokPluginUpdate storyId={storyId} spaceId={spaceId} />
       
     </div>
   );
