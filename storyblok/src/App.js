@@ -1,25 +1,27 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from "react";
+import StoryblokPluginUpdate from "./StoryblokPluginUpdate";
 
-function App() {
+const App = () => {
+  const [story, setStory] = useState(null);
+
+  useEffect(() => {
+    // Listen for Storyblok's live preview updates
+    if (window.storyblok) {
+      window.storyblok.init();
+      window.storyblok.on("change", (storyData) => {
+        setStory(storyData);
+      });
+      window.storyblok.on("input", (storyData) => {
+        setStory(storyData);
+      });
+    }
+  }, []);
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {story ? <StoryblokPluginUpdate story={story} /> : <p>Loading Story...</p>}
     </div>
   );
-}
+};
 
 export default App;
