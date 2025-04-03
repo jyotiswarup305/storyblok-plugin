@@ -16,9 +16,7 @@ const findOutOfSchemaAttributes = (content, components) => {
         outOfSchema.push({
           component: componentName,
           attribute: attr,
-          type: typeof content[attr],
           path: `${currentPath}.${attr}`,
-          value: content[attr],
         });
       }
     });
@@ -40,33 +38,16 @@ const findOutOfSchemaAttributes = (content, components) => {
   return outOfSchema;
 };
 
-const StoryblokPluginUpdate = ({ story }) => {
-  const [outOfSchemaData, setOutOfSchemaData] = useState([]);
-
+const StoryblokPluginUpdate = ({ story, onUpdate }) => {
   useEffect(() => {
     if (story && story.content) {
       const components = story.content.components || [];
       const violations = findOutOfSchemaAttributes(story.content, components);
-      setOutOfSchemaData(violations);
+      onUpdate(violations);
     }
-  }, [story]);
+  }, [story, onUpdate]);
 
-  return (
-    <div className="container">
-      <h1 className="header">Storyblok Schema Checker</h1>
-      {outOfSchemaData.length > 0 ? (
-        <ul>
-          {outOfSchemaData.map((violation, index) => (
-            <li key={index}>
-              <strong>{violation.component}</strong> has an out-of-schema attribute: <strong>{violation.attribute}</strong> at <em>{violation.path}</em>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p>No schema violations detected.</p>
-      )}
-    </div>
-  );
+  return null;
 };
 
 export default StoryblokPluginUpdate;
